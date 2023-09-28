@@ -66,7 +66,7 @@ struct SignUpView: View {
                 .overlay(
                         RoundedRectangle(cornerRadius: 10)
                             .stroke(lineWidth: 2)
-                            .foregroundColor(.white)
+                            .foregroundColor(Color("bdcolor"))
                 )
                 .padding()
                 
