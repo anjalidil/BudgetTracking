@@ -16,21 +16,27 @@ struct SignUpView: View {
 //
     var body: some View {
         ZStack{
-            Color.black.edgesIgnoringSafeArea(.all)
+            Color.white.edgesIgnoringSafeArea(.all)
             
             VStack{
+                
+                HStack{
+                    Image("logo1")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 230, height: 200)
+                        .padding(.vertical, 5)
+                }
+                
                 HStack{
                     Text("Create an Account")
-                        .foregroundColor(.white)
-                        .font(.largeTitle)
+                        .font(.title)
                         .bold()
                     
-                    Spacer()
+                    
                 }
                 .padding()
-                .padding(.top)
-                
-                Spacer()
+               
                 
                 HStack{
                     Image(systemName: "mail")
@@ -38,16 +44,14 @@ struct SignUpView: View {
                     
                     Spacer()
                     
-                    Image(systemName: "checkmark")
-                        .foregroundColor(.green)
-                        //.fontWeight(.bold)
+                    
                 }
-                .foregroundColor(.white)
+                
                 .padding()
                 .overlay(
-                        RoundedRectangle(cornerRadius: 10)
+                        RoundedRectangle(cornerRadius: 20)
                             .stroke(lineWidth: 2)
-                            .foregroundColor(.white)
+                            .foregroundColor(Color("bdcolor"))
                 )
                 .padding()
                 
@@ -57,14 +61,12 @@ struct SignUpView: View {
                     
                     Spacer()
                     
-                    Image(systemName: "checkmark")
-                        .foregroundColor(.green)
-                        //.fontWeight(.bold)
+                    
                 }
-                .foregroundColor(.white)
+                
                 .padding()
                 .overlay(
-                        RoundedRectangle(cornerRadius: 10)
+                        RoundedRectangle(cornerRadius: 20)
                             .stroke(lineWidth: 2)
                             .foregroundColor(Color("bdcolor"))
                 )
@@ -75,11 +77,10 @@ struct SignUpView: View {
                         self.currentShowingView = "login"
                     }
                 }){
-                    Text("Already have an account?")
-                        .foregroundColor(.gray)
+                    Text("Already have an account? Log in")
+                        .foregroundColor(.black.opacity(0.6))
                 }
-                Spacer()
-                Spacer()
+               
                 
                 Button{
                     
@@ -99,7 +100,7 @@ struct SignUpView: View {
                 
                 } label: {
                     Text("Create New Account")
-                        .foregroundColor(.black)
+                        .foregroundColor(.white)
                         .font(.title3)
                         .bold()
                     
@@ -107,11 +108,19 @@ struct SignUpView: View {
                         .padding()
                     
                         .background(
-                            RoundedRectangle(cornerRadius: 10)
+                            RoundedRectangle(cornerRadius: 20)
                                 .fill(Color.white)
                         )
                         .padding(.horizontal)
                 }
+                Spacer()
+                Spacer()
+                HStack{
+                    Text("Copyright@2023 MyMoney. All rights reserved.")
+                        .font(.footnote)
+                        .foregroundColor(.black.opacity(0.6))
+                }
+                        
             }
             
             

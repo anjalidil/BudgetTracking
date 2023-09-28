@@ -49,7 +49,7 @@ struct LoginView: View {
                 }
                 .padding()
                 .overlay(
-                        RoundedRectangle(cornerRadius: 17)
+                        RoundedRectangle(cornerRadius: 20)
                             .stroke(lineWidth: 2)
                             .foregroundColor(Color("bdcolor"))
                 )
@@ -65,7 +65,7 @@ struct LoginView: View {
                 }
                 .padding()
                 .overlay(
-                        RoundedRectangle(cornerRadius: 17)
+                        RoundedRectangle(cornerRadius: 20)
                             .stroke(lineWidth: 2)
                             .foregroundColor(Color("bdcolor"))
                 )
@@ -108,13 +108,18 @@ struct LoginView: View {
                         .padding()
                     
                         .background(
-                            RoundedRectangle(cornerRadius: 17)
+                            RoundedRectangle(cornerRadius: 20)
                                 .fill(Color("bdcolor"))
                         )
                         .padding(.horizontal)
                 }
                 Spacer()
                 Spacer()
+                HStack{
+                    Text("Copyright@2023 MyMoney. All rights reserved.")
+                        .font(.footnote)
+                        .foregroundColor(.black.opacity(0.6))
+                }
             }
             
             
