@@ -11,6 +11,7 @@ import FirebaseAuth
 struct ProfileView: View {
     @AppStorage("uid") var userID: String = ""
     @State private var userEmail: String? // Add a state property to hold the user's email
+    @State private var isCategoryViewPresented = false
     
     var body: some View {
         
@@ -38,7 +39,7 @@ struct ProfileView: View {
                 
                 Section("Configurations") {
                     Button {
-                        // Add your action here
+                        isCategoryViewPresented.toggle()
                     } label: {
                         ProfileRowVIew(imageName: "list.clipboard.fill",
                                        title: "Categories",

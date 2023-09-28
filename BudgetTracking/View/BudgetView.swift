@@ -1,37 +1,33 @@
-
-
 import SwiftUI
 import Firebase
 import FirebaseFirestore
 
-struct ExpenseCategory: Identifiable, Hashable {
+struct Category: Identifiable, Hashable {
     var id: String?
     var name: String
+}
+
+struct CategoryAmount {
+    var category: Category
+    var amount: String
 }
 
 struct BudgetView: View {
     @State private var isAlertShowing = false
     @AppStorage("uid") var userID: String = ""
-    @State private var categories: [ExpenseCategory] = []
-    @State private var amount: String = ""
-    @State private var date: Date = Date()
-    @State private var note: String = ""
+    @State private var categories: [Category] = []
+    @State private var month: String = ""
+    @State private var selectedCategoryIndices: Set<Int> = []
+    @State private var categoryAmounts: [CategoryAmount] = []
 
-    @State private var selectedCategoryIndex = 0
-
-    var selectedCategory: ExpenseCategory? {
-        if categories.indices.contains(selectedCategoryIndex) {
-            return categories[selectedCategoryIndex]
-        }
-        return nil
-    }
+    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
     var body: some View {
         if userID == "" {
             AuthView()
         } else {
             VStack {
-                HStack{
+                HStack {
                     Image(systemName: "dollarsign.arrow.circlepath")
                         .imageScale(.large)
                         .padding(.top, 23)
@@ -40,86 +36,88 @@ struct BudgetView: View {
                         .fontWeight(.bold)
                         .padding(.top, 20)
                 }
-                
-               
-                
+
                 VStack(alignment: .leading, spacing: 20) {
-                    TextField("Amount", text: $amount)
-                        .keyboardType(.decimalPad)
-                        .padding(10)
-                        .background(Color.white)
-                        .cornerRadius(10)
-                    
-                    DatePicker("Date", selection: $date, displayedComponents: .date)
-                        .padding(10)
-                        .background(Color.white)
-                        .cornerRadius(10)
-                    
-                    TextField("Note", text: $note)
-                        .padding(10)
-                        .background(Color.white)
-                        .cornerRadius(10)
-                    
-                    Picker("Category", selection: $selectedCategoryIndex) {
-                        ForEach(0..<categories.count, id: \.self) { index in
-                            Text(categories[index].name)
+                    Text("Select Month")
+                    Picker("Month", selection: $month) {
+                        ForEach(months, id: \.self) { month in
+                            Text(month).tag(month)
                         }
                     }
-                    .pickerStyle(DefaultPickerStyle())
+                    .pickerStyle(WheelPickerStyle())
                     .padding(10)
-                    .background(Color.white)
-                    .cornerRadius(10)
+
+                    ForEach(categories, id: \.id) { category in
+                        HStack {
+                            Text(category.name)
+                            Spacer()
+                            Spacer()
+                            Spacer()
+                            TextField("Amount", text: Binding(
+                                get: {
+                                    getCategoryAmount(category: category)
+                                },
+                                set: { newValue in
+                                    setCategoryAmount(category: category, amount: newValue)
+                                }
+                            ))
+                            
+                        }
+                    }
                 }
                 .padding(20)
-                
+
                 Button(action: {
-                    handleCreate()
-                }) {
-                    Text("Submit Expense")
+                    // Create budget documents for selected categories in the "Budget" collection
+                    for index in selectedCategoryIndices {
+                        let selectedCategoryAmount = categoryAmounts[index]
+                        let amountString = selectedCategoryAmount.amount // Unwrapped safely
+                        if let amount = Double(amountString) {
+                            let budgetData: [String: Any] = [
+                                "month": month,
+                                "amount": amount,
+                                "category": selectedCategoryAmount.category.name
+                            ]
+
+                            Firestore.firestore().collection("Budget").addDocument(data: budgetData) { error in
+                                if let error = error {
+                                    print("Error adding document to Firestore: \(error)")
+                                } else {
+                                    print("Document added to Firestore successfully.")
+                                }
+                            
+                            }
+                        }
+                    }
+
+                    // Clear the input fields
+                    month = ""
+                    categoryAmounts = []
+                    selectedCategoryIndices.removeAll()
+                }){
+                    Text("Create Budget")
                         .font(.headline)
                         .foregroundColor(.white)
                         .padding()
                         .frame(maxWidth: .infinity)
-                        .background(Color.blue)
+                        .background(Color("bdcolor"))
                         .cornerRadius(10)
                 }
                 .padding(20)
-                
+
                 Spacer()
             }
             .onAppear {
-                // Fetch categories for the AddView when it appears
-                loadCategoriesForAddView()
-            }
-        }
-    }
-
-    func loadCategoriesForAddView() {
-        let db = Firestore.firestore()
-        let user = Auth.auth().currentUser
-
-        guard let userUID = user?.uid else {
-            print("User is not authenticated.")
-            return
-        }
-
-        let userCategoriesRef = db.collection("users").document(userUID).collection("categories")
-
-        userCategoriesRef.getDocuments { snapshot, error in
-            if let error = error {
-                print("Error fetching categories: \(error.localizedDescription)")
-            } else {
-                if let documents = snapshot?.documents {
-                    self.categories.removeAll()
-
-                    for document in documents {
-                        let data = document.data()
-                        if let name = data["name"] as? String,
-                           let color = data["color"] as? String {
-                            // Ensure that the "id" field is retrieved as a string
-                            let id = document.documentID
-                            let category = ExpenseCategory(id: id, name: name)
-                            self.categories.append(category)
+                // Fetch categories for the Picker from Firestore
+                Firestore.firestore().collection("Category").getDocuments { (querySnapshot, error) in
+                    if let error = error {
+                        print("Error fetching categories: \(error)")
+                    } else {
+                        for document in querySnapshot!.documents {
+                            if let categoryName = document["name"] as? String {
+                                categories.append(Category(id: document.documentID, name: categoryName))
+                                categoryAmounts.append(CategoryAmount(category: Category(id: document.documentID, name: categoryName), amount: ""))
+                            }
                         }
                     }
                 }
@@ -127,42 +125,16 @@ struct BudgetView: View {
         }
     }
 
-    func handleCreate() {
-        let db = Firestore.firestore()
-        let user = Auth.auth().currentUser
-
-        guard let userUID = user?.uid else {
-            print("User is not authenticated.")
-            return
+    private func getCategoryAmount(category: Category) -> String {
+        if let index = categoryAmounts.firstIndex(where: { $0.category.id == category.id }) {
+            return categoryAmounts[index].amount ?? ""
         }
+        return ""
+    }
 
-        guard let selectedCategory = selectedCategory else {
-            print("No category selected.")
-            return
-        }
-
-        guard let amountDouble = Double(amount) else {
-            print("Invalid amount.")
-            return
-        }
-
-        let expenseData: [String: Any] = [
-            "amount": amountDouble,
-            "date": date,
-            "note": note,
-            "category": selectedCategory.name
-        ]
-
-        db.collection("users").document(userUID).collection("expenses").addDocument(data: expenseData) { error in
-            if let error = error {
-                print("Error adding expense: \(error.localizedDescription)")
-            } else {
-                print("Expense added successfully.")
-                // Reset the form fields
-                amount = ""
-                date = Date()
-                note = ""
-            }
+    private func setCategoryAmount(category: Category, amount: String) {
+        if let index = categoryAmounts.firstIndex(where: { $0.category.id == category.id }) {
+            categoryAmounts[index].amount = amount
         }
     }
 }
@@ -172,4 +144,3 @@ struct BudgetView_Previews: PreviewProvider {
         BudgetView()
     }
 }
-

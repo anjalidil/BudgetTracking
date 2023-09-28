@@ -9,14 +9,14 @@ import FirebaseAuth
 
 struct ContentView: View {
     @AppStorage("uid") var userID: String = ""
-    @State var selectedTab: Tabs = .expense
+    @State var selectedTab: Tabs = .home
     var body: some View {
         if userID == "" {
             AuthView()
             
         } else {
             TabView(selection: $selectedTab) {
-                ExpenseView()
+                HomeView()
                         .tabItem {
                         Label("Home", systemImage: "homekit")
                     }
