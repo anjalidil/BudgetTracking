@@ -1,9 +1,4 @@
-//
-//  AuthView.swift
-//  BudgetTracking
-//
-//  Created by Ama Ranasi on 2023-09-28.
-//
+
 
 import SwiftUI
 

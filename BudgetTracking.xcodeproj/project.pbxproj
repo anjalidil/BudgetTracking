@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B056A2B2AC58CEE00D6E93D /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B056A2A2AC58CEE00D6E93D /* CustomTabBar.swift */; };
+		1B056A2D2AC58EF200D6E93D /* ExpenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B056A2C2AC58EF200D6E93D /* ExpenseView.swift */; };
+		1B056A2F2AC590CD00D6E93D /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B056A2E2AC590CD00D6E93D /* ProfileView.swift */; };
+		1B056A312AC5912200D6E93D /* BudgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B056A302AC5912200D6E93D /* BudgetView.swift */; };
+		1B62C3872AC5A0DC00739619 /* InsightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B62C3862AC5A0DC00739619 /* InsightsView.swift */; };
 		810208282AC4B8EA00DA7098 /* signUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810208272AC4B8EA00DA7098 /* signUpView.swift */; };
 		8102082B2AC4BB8600DA7098 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8102082A2AC4BB8600DA7098 /* AuthView.swift */; };
 		8102082D2AC4BBFB00DA7098 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8102082C2AC4BBFB00DA7098 /* LoginView.swift */; };
@@ -41,6 +46,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1B056A2A2AC58CEE00D6E93D /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
+		1B056A2C2AC58EF200D6E93D /* ExpenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseView.swift; sourceTree = "<group>"; };
+		1B056A2E2AC590CD00D6E93D /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		1B056A302AC5912200D6E93D /* BudgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetView.swift; sourceTree = "<group>"; };
+		1B62C3862AC5A0DC00739619 /* InsightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsView.swift; sourceTree = "<group>"; };
 		810208272AC4B8EA00DA7098 /* signUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = signUpView.swift; sourceTree = "<group>"; };
 		8102082A2AC4BB8600DA7098 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		8102082C2AC4BBFB00DA7098 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -85,12 +95,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B056A272AC58ACA00D6E93D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1B056A2A2AC58CEE00D6E93D /* CustomTabBar.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		810208292AC4B97A00DA7098 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				810208272AC4B8EA00DA7098 /* signUpView.swift */,
 				8102082A2AC4BB8600DA7098 /* AuthView.swift */,
 				8102082C2AC4BBFB00DA7098 /* LoginView.swift */,
+				1B056A2C2AC58EF200D6E93D /* ExpenseView.swift */,
+				1B056A2E2AC590CD00D6E93D /* ProfileView.swift */,
+				1B056A302AC5912200D6E93D /* BudgetView.swift */,
+				1B62C3862AC5A0DC00739619 /* InsightsView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -118,6 +140,7 @@
 		81D272D92AC361570004DBFD /* BudgetTracking */ = {
 			isa = PBXGroup;
 			children = (
+				1B056A272AC58ACA00D6E93D /* Model */,
 				810208292AC4B97A00DA7098 /* View */,
 				81D273042AC363800004DBFD /* GoogleService-Info.plist */,
 				81D272DA2AC361570004DBFD /* BudgetTrackingApp.swift */,
@@ -292,10 +315,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B056A2F2AC590CD00D6E93D /* ProfileView.swift in Sources */,
+				1B62C3872AC5A0DC00739619 /* InsightsView.swift in Sources */,
 				81D272DD2AC361570004DBFD /* ContentView.swift in Sources */,
 				81D272DB2AC361570004DBFD /* BudgetTrackingApp.swift in Sources */,
 				8102082B2AC4BB8600DA7098 /* AuthView.swift in Sources */,
+				1B056A312AC5912200D6E93D /* BudgetView.swift in Sources */,
+				1B056A2D2AC58EF200D6E93D /* ExpenseView.swift in Sources */,
 				8102082D2AC4BBFB00DA7098 /* LoginView.swift in Sources */,
+				1B056A2B2AC58CEE00D6E93D /* CustomTabBar.swift in Sources */,
 				810208282AC4B8EA00DA7098 /* signUpView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

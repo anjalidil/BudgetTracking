@@ -4,40 +4,94 @@
 //
 //  Created by Ama Ranasi on 2023-09-27.
 //
-
 import SwiftUI
 import FirebaseAuth
 
-
 struct ContentView: View {
     @AppStorage("uid") var userID: String = ""
-    
+    @State var selectedTab: Tabs = .expense
     var body: some View {
-        
         if userID == "" {
-            
             AuthView()
-        }else {
-            Text("Logged In! \nYour User ID is: \(userID)")
             
-            Button(action: {
-                let firebaseAuth = Auth.auth()
-                do {
-                  try firebaseAuth.signOut()
-                    withAnimation{
-                        userID = ""
+        } else {
+            TabView(selection: $selectedTab) {
+                ExpenseView()
+                        .tabItem {
+                        Label("Home", systemImage: "homekit")
                     }
-                    
-                } catch let signOutError as NSError {
-                  print("Error signing out: %@", signOutError)
-                }
-            }){
-                Text("Sign Out")
+                    .tag(Tabs.home)
+              
+//                AddView()
+                ExpenseView()
+                    .tabItem {
+                        Label("Transactions", systemImage: "tray.and.arrow.up.fill")
+                    }
+                    .tag(Tabs.expense)
+                
+                InsightsView()
+                    .tabItem {
+                        Label("Insights", systemImage: "chart.bar.fill")
+                                    }
+                    .tag(Tabs.insights)
+                
+                BudgetView()
+                    .tabItem {
+                        Label("Budget", systemImage: "dollarsign.arrow.circlepath")
+                    }
+                    .tag(Tabs.budget)
+                
+                ProfileView()
+                    .tabItem {
+                        Label("Profile", systemImage: "person.crop.circle")
+                    }
+                    .tag(Tabs.profile)
             }
+            .accentColor(Color("bdcolor")) // Set the tab bar color
+            
+            //CustomTabBar(selectedTabs: $selectedTab)
         }
-        
     }
 }
+
+
+
+
+
+
+//import SwiftUI
+//import FirebaseAuth
+//
+//
+//struct ContentView: View {
+//    @AppStorage("uid") var userID: String = ""
+//
+//    var body: some View {
+//
+//        if userID == "" {
+//
+//            AuthView()
+//        }else {
+//            Text("Logged In! \nYour User ID is: \(userID)")
+//
+//            Button(action: {
+//                let firebaseAuth = Auth.auth()
+//                do {
+//                  try firebaseAuth.signOut()
+//                    withAnimation{
+//                        userID = ""
+//                    }
+//
+//                } catch let signOutError as NSError {
+//                  print("Error signing out: %@", signOutError)
+//                }
+//            }){
+//                Text("Sign Out")
+//            }
+//        }
+//
+//    }
+//}
 
 
 struct ContentView_Previews: PreviewProvider {
