@@ -16,7 +16,7 @@ struct ContentView: View {
             
         } else {
             TabView(selection: $selectedTab) {
-                HomeView()
+                AddExpense()
                         .tabItem {
                         Label("Home", systemImage: "homekit")
                     }
