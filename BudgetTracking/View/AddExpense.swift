@@ -148,6 +148,9 @@ struct AddExpense: View {
     
             }
             .navigationBarTitle("Add New Transactions")
+            .sheet(isPresented: $isShowingListView, content: {
+                ExpenseView()
+            })
                         .onAppear {
 //                            UINavigationBar.appearance().largeTitleTextAttributes = [.font: UIFont.systemFont(ofSize: 10)] // Adjust the font size as needed
                             // Fetch categories for the Picker from Firestore
