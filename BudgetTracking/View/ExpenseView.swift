@@ -21,8 +21,12 @@ struct ExpenseView: View {
     let expenseTypeOptions = ["All", "Expense", "Income"]
     
     // Date range selection
-    @State private var startDate: Date = Date() // Default to the current date
-        @State private var endDate: Date = Date()
+    @State private var startDate: Date = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: Date())) ?? Date()
+        
+        @State private var endDate: Date = {
+            let lastDayOfMonth = Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: Date())
+            return lastDayOfMonth ?? Date()
+        }()
     
     var filteredTransactions: [ExpenseTransaction] {
            if selectedTransactionType == 0 {
@@ -39,19 +43,28 @@ struct ExpenseView: View {
            }
        }
     var body: some View {
-        NavigationView {
-            VStack {
+        
+            VStack(alignment: .leading) {
+                Text("Transactions")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .padding(.top, 10)
+                    .padding(.bottom, 17)
+                    .padding(.horizontal, 30)
+                
+                    
                 HStack{
                     DatePicker("", selection: $startDate, in: ...Date(), displayedComponents: .date)
                         .datePickerStyle(CompactDatePickerStyle())
-                        .padding(10)
+                        .padding(.horizontal, 16)
                         .font(.system(size: 12))
                     
-                    DatePicker("to", selection: $endDate, in: ...Date(), displayedComponents: .date)
+                    DatePicker("to ", selection: $endDate, in: ...Date(), displayedComponents: .date)
                         .datePickerStyle(CompactDatePickerStyle())
-                        .padding(10)
-                        .font(.system(size: 12))
+                        .padding(.horizontal, 16)
+                        .font(.system(size: 18))
                 }
+                .padding(.bottom, 17)
                 HStack {
                     Picker("Select transaction type", selection: $selectedTransactionType) {
                         ForEach(0..<expenseTypeOptions.count, id: \.self) { index in
@@ -116,7 +129,7 @@ struct ExpenseView: View {
                 }) {
                     Image(systemName: "plus.circle.fill")
                         .resizable()
-                        .frame(width: 40, height: 40)
+                        .frame(width: 35, height: 35)
                         .padding()
                         .background(Color("bdcolor"))
                         .foregroundColor(.white)
@@ -136,8 +149,7 @@ struct ExpenseView: View {
             }
             .onAppear {
                 fetchTransactions()
-            }
-            .navigationTitle("Expense Tracker")
+            
         }
     }
     
