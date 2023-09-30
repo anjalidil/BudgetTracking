@@ -20,28 +20,139 @@ struct HomeView: View {
     @State private var transactions: [HomeTransactions] = []
     @State private var selectedTransactionType = 0
     let expenseTypeOptions = ["All", "Expense", "Income"]
-    
+    var isFilter: Bool = false
+    @State private var incomeTotal: Double = 0 // Declare incomeTotal here
+    @State private var expenseTotal: Double = 0
+    @State private var currentMonthDateString = ""
+
     // Chart Data
     @State private var chartDatas: [Double] = [0, 0] // Initialize with default values
     
     var body: some View {
         VStack {
-            Text("Difference: \(calculateDifference())")
-                .padding()
+            
+            HStack(alignment: .top){
+                Text("MyMoney")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding(.top, 10)
+                    .padding(.bottom, 17)
+                    .padding(.horizontal, 30)
+                Spacer()
+                
+            }
+           
+            GeometryReader{proxy in
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .fill(
+                        .linearGradient(colors: [
+                            Color("homeblue"),
+                            Color("bdcolor"),
+                            Color("homecolor"),
+                            
+                            
+                        ], startPoint: .topLeading, endPoint: .bottomTrailing)
+                    )
+                VStack(spacing: 20){
+                    VStack(spacing: 15){
+                        
+                        //currently going month date string
+                        Text( currentMonthDateString)
+                            .font(.callout)
+                            .fontWeight(.semibold)
+                        
+                        //current month transaction difference
+                        Text("\(calculateDifference())")
+                            .font(.system(size: 35, weight: .bold))
+                        
+                            .lineLimit(1)
+                            .padding(.bottom, 5)
+                        
+                        
+                    }
+                    
+                    .offset(y: -10)
+                    HStack(spacing: 15){
+                        Image(systemName: "arrow.down.circle.fill")
+                            .imageScale(.large)
+                            .font(.caption.bold())
+                            .foregroundColor(.green)
+                            .frame(width: 30, height: 30)
+                            .background(.white, in: Circle())
+                        
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Income")
+                                .font(.caption)
+                                .opacity(0.7)
+                            //print totalIncome
+                            Text(String(format: "%.2f", incomeTotal))
+                                .font(.callout)
+                                .fontWeight(.semibold)
+                                .lineLimit(1)
+                                .fixedSize()
+                            
+                        }
+                        
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        
+                        
+                        Image(systemName: "arrow.up.circle.fill")
+                            .imageScale(.large)
+                            .font(.caption.bold())
+                            .foregroundColor(.red)
+                            .frame(width: 30, height: 30)
+                            .background(.white.opacity(0.8), in: Circle())
+                        
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Expenses")
+                                .font(.caption)
+                                .opacity(0.7)
+                            //print totalExpense
+                            Text(String(format: "%.2f", expenseTotal))
+                            
+                                .font(.callout)
+                                .fontWeight(.semibold)
+                                .lineLimit(1)
+                                .fixedSize()
+                            
+                        }
+                        
+                        
+                    }
+                    
+                    .padding(.horizontal)
+                    .padding(.trailing)
+                    .offset(y: 15)
+                }
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            }
+            .frame(height: 230)
+            .padding(.top)
+            .padding(.horizontal, 10)
+            
+         
             // Display the Bar Chart
             BarChartView(data: ChartData(values: [
                 ("Expenses", chartDatas[0]),
                 ("Income", chartDatas[1])
             ]), title: "Expenses vs. Income")
             .frame(width: 500, height: 300)
-            .padding()
-            
-            
-            
            
+            
+            
+                        
+            
+            
         }
         .onAppear {
             fetchTransactions()
+            
+            // Set the currentMonthDateString when the view appears
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MMMM yyyy" // Format to display the month and year
+            currentMonthDateString = dateFormatter.string(from: Date())
+            
         }
     }
     
@@ -68,11 +179,11 @@ struct HomeView: View {
                 } ?? []
                 
                 // Calculate total expenses and income
-                let expensesTotal = transactions.filter { $0.type == "Expense" }.reduce(0) { $0 + $1.amount }
-                let incomeTotal = transactions.filter { $0.type == "Income" }.reduce(0) { $0 + $1.amount }
+                expenseTotal = transactions.filter { $0.type == "Expense" }.reduce(0) { $0 + $1.amount }
+                incomeTotal = transactions.filter { $0.type == "Income" }.reduce(0) { $0 + $1.amount }
                 
                 // Update chart data
-                chartDatas = [expensesTotal, incomeTotal]
+                chartDatas = [expenseTotal, incomeTotal]
                 
                 print("Transactions loaded successfully: \(self.transactions)")
             }
@@ -82,7 +193,8 @@ struct HomeView: View {
     func calculateDifference() -> Double {
         let expensesTotal = transactions.filter { $0.type == "Expense" }.reduce(0) { $0 + $1.amount }
         let incomeTotal = transactions.filter { $0.type == "Income" }.reduce(0) { $0 + $1.amount }
-        return expensesTotal - incomeTotal
+        let difference = expensesTotal - incomeTotal
+            return (difference * 100).rounded() / 100
     }
 }
 

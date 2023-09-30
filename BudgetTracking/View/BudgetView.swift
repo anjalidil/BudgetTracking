@@ -92,7 +92,8 @@ struct BudgetView: View {
                                        "month": month,
                                        "amount": Double(amount) ?? 0.0,
                                       
-                                       "category": selectedCategory?.name ?? ""
+                                       "category": selectedCategory?.name ?? "",
+                                       "userID": userID
                                    ]
 
                                    budgetCollection.addDocument(data: budgetData) { error in
@@ -104,6 +105,7 @@ struct BudgetView: View {
                                            amount = ""
                                           
                                            selectedCategoryIndex = 0
+                                           
                                        }
                                    }
                                }) {
