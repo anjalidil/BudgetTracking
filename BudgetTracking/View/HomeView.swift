@@ -22,7 +22,7 @@ struct HomeView: View {
     let expenseTypeOptions = ["All", "Expense", "Income"]
     
     // Chart Data
-    @State private var chartData: [Double] = [0, 0] // Initialize with default values
+    @State private var chartDatas: [Double] = [0, 0] // Initialize with default values
     
     var body: some View {
         VStack {
@@ -30,8 +30,8 @@ struct HomeView: View {
                 .padding()
             // Display the Bar Chart
             BarChartView(data: ChartData(values: [
-                ("Expenses", chartData[0]),
-                ("Income", chartData[1])
+                ("Expenses", chartDatas[0]),
+                ("Income", chartDatas[1])
             ]), title: "Expenses vs. Income")
             .frame(width: 500, height: 300)
             .padding()
@@ -72,7 +72,7 @@ struct HomeView: View {
                 let incomeTotal = transactions.filter { $0.type == "Income" }.reduce(0) { $0 + $1.amount }
                 
                 // Update chart data
-                chartData = [expensesTotal, incomeTotal]
+                chartDatas = [expensesTotal, incomeTotal]
                 
                 print("Transactions loaded successfully: \(self.transactions)")
             }

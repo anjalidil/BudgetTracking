@@ -14,6 +14,8 @@
 		1B1E98532AC605BF008A69CA /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1E98522AC605BF008A69CA /* HomeView.swift */; };
 		1B1E98552AC60B2E008A69CA /* ExpenseCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1E98542AC60B2E008A69CA /* ExpenseCard.swift */; };
 		1B1E98572AC60C5B008A69CA /* ExpenseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1E98562AC60C5B008A69CA /* ExpenseViewModel.swift */; };
+		1B4BCDB92AC8460300340BDC /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 1B4BCDB82AC8460300340BDC /* DGCharts */; };
+		1B4BCDBB2AC8460300340BDC /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 1B4BCDBA2AC8460300340BDC /* DGChartsDynamic */; };
 		1B5CD34B2AC70576003E83EC /* AddExpense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5CD34A2AC70576003E83EC /* AddExpense.swift */; };
 		1B62C3872AC5A0DC00739619 /* InsightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B62C3862AC5A0DC00739619 /* InsightsView.swift */; };
 		1B62C3892AC5AB7200739619 /* ProfileRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B62C3882AC5AB7200739619 /* ProfileRowView.swift */; };
@@ -89,7 +91,9 @@
 			files = (
 				81D273082AC3678C0004DBFD /* FirebaseAuth in Frameworks */,
 				1BFDACF52AC7A25700CCE2A3 /* SwiftUICharts in Frameworks */,
+				1B4BCDB92AC8460300340BDC /* DGCharts in Frameworks */,
 				81D2730A2AC3678C0004DBFD /* FirebaseFirestore in Frameworks */,
+				1B4BCDBB2AC8460300340BDC /* DGChartsDynamic in Frameworks */,
 				81D2730C2AC3678C0004DBFD /* FirebaseFirestoreSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -220,6 +224,8 @@
 				81D273092AC3678C0004DBFD /* FirebaseFirestore */,
 				81D2730B2AC3678C0004DBFD /* FirebaseFirestoreSwift */,
 				1BFDACF42AC7A25700CCE2A3 /* SwiftUICharts */,
+				1B4BCDB82AC8460300340BDC /* DGCharts */,
+				1B4BCDBA2AC8460300340BDC /* DGChartsDynamic */,
 			);
 			productName = BudgetTracking;
 			productReference = 81D272D72AC361570004DBFD /* BudgetTracking.app */;
@@ -296,6 +302,7 @@
 			packageReferences = (
 				81D273062AC3678C0004DBFD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				1BFDACF32AC7A25700CCE2A3 /* XCRemoteSwiftPackageReference "ChartView" */,
+				1B4BCDB72AC8460300340BDC /* XCRemoteSwiftPackageReference "Charts" */,
 			);
 			productRefGroup = 81D272D82AC361570004DBFD /* Products */;
 			projectDirPath = "";
@@ -685,6 +692,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		1B4BCDB72AC8460300340BDC /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 		1BFDACF32AC7A25700CCE2A3 /* XCRemoteSwiftPackageReference "ChartView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AppPear/ChartView";
@@ -704,6 +719,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		1B4BCDB82AC8460300340BDC /* DGCharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1B4BCDB72AC8460300340BDC /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGCharts;
+		};
+		1B4BCDBA2AC8460300340BDC /* DGChartsDynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1B4BCDB72AC8460300340BDC /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGChartsDynamic;
+		};
 		1BFDACF42AC7A25700CCE2A3 /* SwiftUICharts */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 1BFDACF32AC7A25700CCE2A3 /* XCRemoteSwiftPackageReference "ChartView" */;
