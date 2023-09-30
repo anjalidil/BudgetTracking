@@ -47,7 +47,7 @@ struct ProfileView: View {
                     }
                     .sheet(isPresented: $isCategoryViewPresented) {
                         NavigationView {
-                            AddExpense()
+                            CategoryView()
                                 .navigationBarItems(
                                     leading: Button("Cancel") {
                                         isCategoryViewPresented = false
