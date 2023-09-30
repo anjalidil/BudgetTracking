@@ -16,7 +16,7 @@ struct ContentView: View {
             
         } else {
             TabView(selection: $selectedTab) {
-                AddExpense()
+                CategoryView()
                         .tabItem {
                         Label("Home", systemImage: "homekit")
                     }
@@ -59,39 +59,6 @@ struct ContentView: View {
 
 
 
-//import SwiftUI
-//import FirebaseAuth
-//
-//
-//struct ContentView: View {
-//    @AppStorage("uid") var userID: String = ""
-//
-//    var body: some View {
-//
-//        if userID == "" {
-//
-//            AuthView()
-//        }else {
-//            Text("Logged In! \nYour User ID is: \(userID)")
-//
-//            Button(action: {
-//                let firebaseAuth = Auth.auth()
-//                do {
-//                  try firebaseAuth.signOut()
-//                    withAnimation{
-//                        userID = ""
-//                    }
-//
-//                } catch let signOutError as NSError {
-//                  print("Error signing out: %@", signOutError)
-//                }
-//            }){
-//                Text("Sign Out")
-//            }
-//        }
-//
-//    }
-//}
 
 
 struct ContentView_Previews: PreviewProvider {

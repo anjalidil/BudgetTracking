@@ -18,7 +18,7 @@ struct BudgetView: View {
     @State private var amount: String = ""
     @State private var date: Date = Date()
     @State private var note: String = ""
-    
+    @State private var isViewBudgetHistory = false
     @State private var selectedCategoryIndex = 0
     
     
@@ -116,6 +116,25 @@ struct BudgetView: View {
                         .cornerRadius(10)
                 }
                 .padding(20)
+                Button(action: {
+                    isViewBudgetHistory.toggle()
+                    
+                }){
+                    Text("View Budget History")
+                        .foregroundColor(Color("bdcolor"))
+                        .underline()
+                }
+                .sheet(isPresented: $isViewBudgetHistory) {
+                    NavigationView {
+                       BudgetHistory()
+                            .navigationBarItems(
+                                leading: Button("Cancel") {
+                                    isViewBudgetHistory = false
+                                }
+                            )
+                    }
+                }
+
                 
                 Spacer()
             }

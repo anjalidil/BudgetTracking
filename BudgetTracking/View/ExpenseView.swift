@@ -44,25 +44,29 @@ struct ExpenseView: View {
        }
     var body: some View {
         
-            VStack(alignment: .leading) {
-                Text("Transactions")
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .padding(.top, 10)
-                    .padding(.bottom, 17)
-                    .padding(.horizontal, 30)
-                
+            VStack {
+                HStack(alignment: .top){
+                    Text("Transactions")
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .padding(.top, 10)
+                        .padding(.bottom, 17)
+                        .padding(.horizontal, 30)
+                    Spacer()
                     
+                }
                 HStack{
                     DatePicker("", selection: $startDate, in: ...Date(), displayedComponents: .date)
                         .datePickerStyle(CompactDatePickerStyle())
-                        .padding(.horizontal, 16)
+                        .padding(.horizontal, 7)
                         .font(.system(size: 12))
                     
                     DatePicker("to ", selection: $endDate, in: ...Date(), displayedComponents: .date)
                         .datePickerStyle(CompactDatePickerStyle())
-                        .padding(.horizontal, 16)
+                        .padding(.horizontal, 10)
                         .font(.system(size: 18))
+                    Spacer()
+                    Spacer()
                 }
                 .padding(.bottom, 17)
                 HStack {

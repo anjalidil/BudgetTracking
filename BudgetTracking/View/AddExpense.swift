@@ -147,7 +147,8 @@ struct AddExpense: View {
                 }
     
             }
-            .navigationBarTitle("Add New Transactions")
+           
+            .navigationBarTitle("Add New Transaction")
             
                         .onAppear {
 //                            UINavigationBar.appearance().largeTitleTextAttributes = [.font: UIFont.systemFont(ofSize: 10)] // Adjust the font size as needed
@@ -165,6 +166,7 @@ struct AddExpense: View {
                             }
                         }
                     }
+       
                 }
     // Function to add a transaction to Firestore
        private func addTransactionToFirestore() {

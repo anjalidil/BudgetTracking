@@ -45,6 +45,16 @@ struct ProfileView: View {
                                        title: "Categories",
                                        tintColor: .cyan)
                     }
+                    .sheet(isPresented: $isCategoryViewPresented) {
+                        NavigationView {
+                            AddExpense()
+                                .navigationBarItems(
+                                    leading: Button("Cancel") {
+                                        isCategoryViewPresented = false
+                                    }
+                                )
+                        }
+                    }
                 }
                 
                 Section("Account") {
@@ -78,6 +88,7 @@ struct ProfileView: View {
                             .foregroundColor(.gray)
                     }
                 }
+                
             }
             .onAppear {
                 fetchUserEmail() // Fetch and update the user's email when the view appears
