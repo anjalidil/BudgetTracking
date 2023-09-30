@@ -81,7 +81,7 @@ struct ExpenseCard: View {
 //                            .fontWeight(.semibold)
 //                            .lineLimit(1)
 //                            .fixedSize()
-//                        
+//
                     }
 
                     

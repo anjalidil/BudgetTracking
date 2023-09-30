@@ -2,6 +2,7 @@ import SwiftUI
 import Firebase
 import FirebaseFirestoreSwift
 import SwiftUICharts
+import GoogleUtilities_AppDelegateSwizzler
 
 struct HomeTransactions: Identifiable, Hashable, Decodable {
     var id: String
@@ -62,7 +63,7 @@ struct HomeView: View {
                             .fontWeight(.semibold)
                         
                         //current month transaction difference
-                        Text("\(calculateDifference())")
+                        Text(String(format: "%.2f", calculateDifference()))
                             .font(.system(size: 35, weight: .bold))
                         
                             .lineLimit(1)
@@ -194,7 +195,7 @@ struct HomeView: View {
         let expensesTotal = transactions.filter { $0.type == "Expense" }.reduce(0) { $0 + $1.amount }
         let incomeTotal = transactions.filter { $0.type == "Income" }.reduce(0) { $0 + $1.amount }
         let difference = expensesTotal - incomeTotal
-            return (difference * 100).rounded() / 100
+            return difference
     }
 }
 

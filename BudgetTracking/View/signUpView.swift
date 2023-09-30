@@ -109,7 +109,7 @@ struct SignUpView: View {
                     
                         .background(
                             RoundedRectangle(cornerRadius: 20)
-                                .fill(Color.white)
+                                .fill(Color("bdcolor"))
                         )
                         .padding(.horizontal)
                 }
